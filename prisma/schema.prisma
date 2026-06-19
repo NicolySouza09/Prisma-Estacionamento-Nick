@@ -19,6 +19,7 @@ model usuario{
   senha String
   perfil String @default("Funcionario")
   criadoEm DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   movimentações movimentacao[]
 }
@@ -31,6 +32,7 @@ model client {
   telefone String
   email String @unique
   criadoEm DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   veiculo veiculo[]
 }
 
@@ -43,6 +45,7 @@ model veiculo {
   tipo String
   criadoEm DateTime @default(now())
   clientId Int
+  updatedAt DateTime @default(now()) @updatedAt
   client client @relation(fields: [clientId], references: [id]) 
 
   movimentações movimentacao[]
@@ -55,6 +58,7 @@ model vaga {
   status String @default("Livre") 
   tipo String
   criadoEm DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
    movimentações movimentacao[]
 }
@@ -67,6 +71,7 @@ model movimentacao {
   valorTotal Decimal  @db.Decimal(10,2)
   status String @default("Aberto")
   criadoEm DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   
   veiculoId Int
   veiculo veiculo @relation(fields: [veiculoId], references: [id])
