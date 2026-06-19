@@ -1,0 +1,13 @@
+-- CreateTable
+CREATE TABLE `client` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `nome` VARCHAR(191) NOT NULL,
+    `CPF` VARCHAR(191) NOT NULL,
+    `telefone` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `criadoEm` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    UNIQUE INDEX `client_CPF_key`(`CPF`),
+    UNIQUE INDEX `client_email_key`(`email`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

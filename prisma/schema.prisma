@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  //output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model usuario{
+  id Int @id @default(autoincrement())
+  nome String
+  email String @unique
+  senha String
+  perfil String @default("Funcionario")
+  criadoEm DateTime @default(now())
+
+  movimentações movimentacao[]
+}
+
+
+model client {
+  id Int @id @default(autoincrement())
+  nome String
+  CPF String @unique
+  telefone String
+  email String @unique
+  criadoEm DateTime @default(now())
+  veiculo veiculo[]
+}
+
+model veiculo {
+  id Int @id @default(autoincrement())
+  placa String @unique
+  modelo String 
+  cor String
+  marca String 
+  tipo String
+  criadoEm DateTime @default(now())
+  clientId Int
+  client client @relation(fields: [clientId], references: [id]) 
+
+  movimentações movimentacao[]
+}
+
+model vaga {
+  id Int @id @default(autoincrement())
+  numero String @unique
+  setor String 
+  status String @default("Livre") 
+  tipo String
+  criadoEm DateTime @default(now())
+
+   movimentações movimentacao[]
+}
+
+model movimentacao {
+  id Int @id @default(autoincrement())
+  dataEntrada DateTime @default(now())
+  dataSida DateTime ?
+  valorHora Decimal @db.Decimal(10,2)
+  valorTotal Decimal  @db.Decimal(10,2)
+  status String @default("Aberto")
+  criadoEm DateTime @default(now())
+  
+  veiculoId Int
+  veiculo veiculo @relation(fields: [veiculoId], references: [id])
+
+  vagaId Int 
+  vaga vaga  @relation(fields: [vagaId], references: [id])
+
+  usuarioId Int 
+  usuario usuario  @relation(fields: [usuarioId], references: [id])
+}
